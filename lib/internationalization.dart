@@ -8,33 +8,37 @@ import 'package:flutter/widgets.dart';
 List<Locale> suportedLocales = [];
 
 class Strings {
-  final Locale locale;
-  final Locale defaultLocale;
-  final String path;
   static final Map<String, dynamic> _defaultLocaleStrings = new Map();
 
-  Map<String, dynamic> _sentences;
+  final Locale _locale;
+  final Locale _defaultLocale;
+  final String _path;
 
-  Strings(this.defaultLocale, this.locale, this.path);
+  Map<String, dynamic> _locationStrings;
+
+  Strings._(this._defaultLocale, this._locale, this._path);
 
   static Strings of(BuildContext context) {
     return Localizations.of<Strings>(context, Strings);
   }
 
-  Future<bool> load() async {
+  _load() async {
     await _loadDefault();
 
-    String data = await rootBundle.loadString('${this.path}/${this.locale.languageCode}_${this.locale.countryCode}.json');
-    _sentences = json.decode(data);
-    return true;
+    if(_locale == _defaultLocale) {
+      return;
+    }
+
+    String data = await rootBundle.loadString('${this._path}/${this._locale.languageCode}_${this._locale.countryCode}.json');
+    _locationStrings = json.decode(data);
   }
 
-  Future _loadDefault() async {
+  _loadDefault() async {
     if (_defaultLocaleStrings.isNotEmpty) {
       return;
     }
 
-    String data = await rootBundle.loadString('${this.path}/${this.defaultLocale.languageCode}_${this.defaultLocale.countryCode}.json');
+    String data = await rootBundle.loadString('${this._path}/${this._defaultLocale.languageCode}_${this._defaultLocale.countryCode}.json');
     Map<String, dynamic> _result = json.decode(data);
 
     _result.forEach((String key, dynamic value) {
@@ -42,14 +46,24 @@ class Strings {
     });
   }
 
+  bool _hasKey(String key) => _locationStrings == null && _defaultLocaleStrings.isEmpty || !_locationStrings.containsKey(key) && !_defaultLocaleStrings.containsKey(key);
+
+  String _interpolateValue(String value, List<String> args) {
+    for (int i = 0; i < (args?.length ?? 0); i++) {
+      value = value.replaceAll("{$i}", args[i]);
+    }
+
+    return value;
+  }
+
   String valueOf(String key, {List<String> args}) {
     if (_hasKey(key)) {
       return key;
     }
 
-    String value = _sentences[key]?.toString() ?? _defaultLocaleStrings[key]?.toString();
+    String value = _locationStrings[key]?.toString() ?? _defaultLocaleStrings[key]?.toString();
 
-    value = interpolateValue(value, args);
+    value = _interpolateValue(value, args);
 
     return value;
   }
@@ -59,20 +73,10 @@ class Strings {
       return key;
     }
 
-    Map<String, dynamic> plurals = _sentences[key] ?? _defaultLocaleStrings[key];
+    Map<String, dynamic> plurals = _locationStrings[key] ?? _defaultLocaleStrings[key];
     final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
     String value = plurals[plural].toString();
-    value = interpolateValue(value, args);
-
-    return value;
-  }
-
-  bool _hasKey(String key) => _sentences == null && _defaultLocaleStrings.isEmpty || !_sentences.containsKey(key) && !_defaultLocaleStrings.containsKey(key);
-
-  String interpolateValue(String value, List<String> args) {
-    for (int i = 0; i < (args?.length ?? 0); i++) {
-      value = value.replaceAll("{$i}", args[i]);
-    }
+    value = _interpolateValue(value, args);
 
     return value;
   }
@@ -95,9 +99,9 @@ class InternationalizationDelegate extends LocalizationsDelegate<Strings> {
 
   @override
   Future<Strings> load(Locale locale) async {
-    Strings localizations = new Strings(this.defaultLocale, locale, this.path);
-    await localizations.load();
-    return localizations;
+    Strings strings = Strings._(this.defaultLocale, locale, this.path);
+    await strings._load();
+    return strings;
   }
 
   @override
