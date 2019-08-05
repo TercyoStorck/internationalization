@@ -16,7 +16,11 @@ class Strings {
 
   Map<String, dynamic> _locationStrings;
 
-  Strings._(this._defaultLocale, this._locale, this._path);
+  static Strings current;
+
+  Strings._(this._defaultLocale, this._locale, this._path) {
+    current = this;
+  }
 
   static Strings of(BuildContext context) {
     return Localizations.of<Strings>(context, Strings);
@@ -25,11 +29,12 @@ class Strings {
   _load() async {
     await _loadDefault();
 
-    if(_locale == _defaultLocale) {
+    if (_locale == _defaultLocale) {
       return;
     }
 
-    String data = await rootBundle.loadString('${this._path}/${this._locale.languageCode}_${this._locale.countryCode}.json');
+    String data = await rootBundle.loadString(
+        '${this._path}/${this._locale.languageCode}_${this._locale.countryCode}.json');
     _locationStrings = json.decode(data);
   }
 
@@ -38,7 +43,8 @@ class Strings {
       return;
     }
 
-    String data = await rootBundle.loadString('${this._path}/${this._defaultLocale.languageCode}_${this._defaultLocale.countryCode}.json');
+    String data = await rootBundle.loadString(
+        '${this._path}/${this._defaultLocale.languageCode}_${this._defaultLocale.countryCode}.json');
     Map<String, dynamic> _result = json.decode(data);
 
     _result.forEach((String key, dynamic value) {
@@ -46,7 +52,10 @@ class Strings {
     });
   }
 
-  bool _hasKey(String key) => _locationStrings == null && _defaultLocaleStrings.isEmpty || !_locationStrings.containsKey(key) && !_defaultLocaleStrings.containsKey(key);
+  bool _hasKey(String key) =>
+      _locationStrings == null && _defaultLocaleStrings.isEmpty ||
+      !(_locationStrings?.containsKey(key) ?? true) &&
+          !(_defaultLocaleStrings?.containsKey(key) ?? true);
 
   String _interpolateValue(String value, List<String> args) {
     for (int i = 0; i < (args?.length ?? 0); i++) {
@@ -61,7 +70,8 @@ class Strings {
       return key;
     }
 
-    String value = _locationStrings[key]?.toString() ?? _defaultLocaleStrings[key]?.toString();
+    String value = _locationStrings[key]?.toString() ??
+        _defaultLocaleStrings[key]?.toString();
 
     value = _interpolateValue(value, args);
 
@@ -73,7 +83,8 @@ class Strings {
       return key;
     }
 
-    Map<String, dynamic> plurals = _locationStrings[key] ?? _defaultLocaleStrings[key];
+    Map<String, dynamic> plurals =
+        _locationStrings[key] ?? _defaultLocaleStrings[key];
     final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
     String value = plurals[plural].toString();
     value = _interpolateValue(value, args);
