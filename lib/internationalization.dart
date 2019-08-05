@@ -29,10 +29,6 @@ class Strings {
   _load() async {
     await _loadDefault();
 
-    if (_locale == _defaultLocale) {
-      return;
-    }
-
     String data = await rootBundle.loadString(
         '${this._path}/${this._locale.languageCode}_${this._locale.countryCode}.json');
     _locationStrings = json.decode(data);
