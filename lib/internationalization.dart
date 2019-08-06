@@ -48,6 +48,14 @@ class Strings {
 
   bool _hasKey(String key) => _locationStrings == null && _defaultLocaleStrings.isEmpty || !_locationStrings.containsKey(key) && !_defaultLocaleStrings.containsKey(key);
 
+  dynamic _valueOf(String key) {
+    if (_locationStrings == null) {
+      return _defaultLocaleStrings[key];
+    }
+
+    return _locationStrings[key] ?? _defaultLocaleStrings[key];
+  }
+  
   String _interpolateValue(String value, List<String> args) {
     for (int i = 0; i < (args?.length ?? 0); i++) {
       value = value.replaceAll("{$i}", args[i]);
@@ -61,7 +69,7 @@ class Strings {
       return key;
     }
 
-    String value = _locationStrings[key]?.toString() ?? _defaultLocaleStrings[key]?.toString();
+    String value = _valueOf(key).toString();
 
     value = _interpolateValue(value, args);
 
@@ -73,7 +81,7 @@ class Strings {
       return key;
     }
 
-    Map<String, dynamic> plurals = _locationStrings[key] ?? _defaultLocaleStrings[key];
+    Map<String, dynamic> plurals = _valueOf(key);
     final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
     String value = plurals[plural].toString();
     value = _interpolateValue(value, args);
@@ -89,7 +97,9 @@ class InternationalizationDelegate extends LocalizationsDelegate<Strings> {
   InternationalizationDelegate({
     this.defaultLocale,
     this.path,
-  });
+  }): assert(
+    defaultLocale != null && path != null
+  );
 
   @override
   bool isSupported(Locale locale) => suportedLocales
