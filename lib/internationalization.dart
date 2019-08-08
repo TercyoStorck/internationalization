@@ -46,7 +46,7 @@ class Strings {
     });
   }
 
-  bool _hasKey(String key) => _locationStrings == null && _defaultLocaleStrings.isEmpty || !_locationStrings.containsKey(key) && !_defaultLocaleStrings.containsKey(key);
+  bool _stringExists(String key) => _locationStrings?.containsKey(key) == true || _defaultLocaleStrings?.containsKey(key) == true;
 
   dynamic _valueOf(String key) {
     if (_locationStrings == null) {
@@ -65,7 +65,7 @@ class Strings {
   }
 
   String valueOf(String key, {List<String> args}) {
-    if (_hasKey(key)) {
+    if (!_stringExists(key)) {
       return key;
     }
 
@@ -77,7 +77,7 @@ class Strings {
   }
 
   String pluralOf(String key, int pluralValue, {List<String> args}) {
-    if (_hasKey(key)) {
+    if (!_stringExists(key)) {
       return key;
     }
 

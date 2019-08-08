@@ -1,0 +1,14 @@
+{
+    "simple_string": "String de valor simples",
+    "interpolation_string": "String {0} interpolada {1}",
+    "simple_plurals" : {
+        "zero": "Sem informações",
+        "one": "Um item",
+        "other": "Vários itens"
+    },
+    "interpolation_plurals": {
+        "zero": "Sem informações {0} com {1}",
+        "one": "Um item {0} com {1}",
+        "other": "Vários itens {0} com {1}"
+    }
+}
