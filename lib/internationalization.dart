@@ -56,27 +56,31 @@ class Strings {
     return _locationStrings[key] ?? _defaultLocaleStrings[key];
   }
   
-  String _interpolateValue(String value, List<String> args) {
+  String _interpolateValue(String value, List<String> args, Map<String, dynamic> namedArgs) {
     for (int i = 0; i < (args?.length ?? 0); i++) {
       value = value.replaceAll("{$i}", args[i]);
+    }
+
+    if (namedArgs?.isNotEmpty == true) {
+      namedArgs.forEach((entryKey, entryValue) => value = value.replaceAll("::$entryKey::", entryValue.toString()));
     }
 
     return value;
   }
 
-  String valueOf(String key, {List<String> args}) {
+  String valueOf(String key, {List<String> args, Map<String, dynamic> namedArgs}) {
     if (!_stringExists(key)) {
       return key;
     }
 
     String value = _valueOf(key).toString();
 
-    value = _interpolateValue(value, args);
+    value = _interpolateValue(value, args, namedArgs);
 
     return value;
   }
 
-  String pluralOf(String key, int pluralValue, {List<String> args}) {
+  String pluralOf(String key, int pluralValue, {List<String> args, Map<String, dynamic> namedArgs}) {
     if (!_stringExists(key)) {
       return key;
     }
@@ -84,7 +88,7 @@ class Strings {
     Map<String, dynamic> plurals = _valueOf(key);
     final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
     String value = plurals[plural].toString();
-    value = _interpolateValue(value, args);
+    value = _interpolateValue(value, args, namedArgs);
 
     return value;
   }

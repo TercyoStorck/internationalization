@@ -10,5 +10,6 @@
         "zero": "No information {0} with {1}",
         "one": "A item {0} with {1}",
         "other": "Many itens {0} with {1}"
-    }
+    },
+    "interpolation_string_with_named_args": "Interpoleted {0} string with ::named_arg_key::"
 }

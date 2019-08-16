@@ -10,5 +10,6 @@
         "zero": "Sem informações {0} com {1}",
         "one": "Um item {0} com {1}",
         "other": "Vários itens {0} com {1}"
-    }
+    },
+    "interpolation_string_with_named_args": "String {0} interpolada ::named_arg_key::"
 }
