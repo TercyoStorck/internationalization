@@ -58,6 +58,7 @@ Strings.of(context).valueOf("key") //To get a simple string
 Strings.of(context).valueOf("key", args: ["A", "B", "C"]) //To get a interpoled string
 Strings.of(context).pluralOf("key", 0) //To get a plural string
 Strings.of(context).pluralOf("key", 0, args: ["A", "B", "C"]) //To get a plural interpoled string
+Strings.of(context).valueOf("key", args: ["A", "B", "C"], namedArgs: {"named_arg_key": "Named arg"}) //To get a interpoled name string
 ```
 
 ## JSON file
@@ -78,6 +79,7 @@ Crete JSON files with locale language code and country code. Ex.: `pt_BR.json`, 
         "zero": "No information {0} with {1}",
         "one": "A item {0} with {1}",
         "other": "Many itens {0} with {1}"
-    }
+    },
+    "interpolation_string_with_named_args": "Interpoleted {0} string with ::named_arg_key::"
 }
 ```
