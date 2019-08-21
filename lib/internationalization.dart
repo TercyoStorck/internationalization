@@ -29,7 +29,7 @@ class Strings {
       return;
     }
 
-    String data = await rootBundle.loadString('${this._path}/${this._locale.languageCode}_${this._locale.countryCode}.json');
+    String data = await rootBundle.loadString(_pathJsonStrings(this._locale));
     _locationStrings = json.decode(data);
   }
 
@@ -38,12 +38,20 @@ class Strings {
       return;
     }
 
-    String data = await rootBundle.loadString('${this._path}/${this._defaultLocale.languageCode}_${this._defaultLocale.countryCode}.json');
+    String data = await rootBundle.loadString(_pathJsonStrings(this._defaultLocale));
     Map<String, dynamic> _result = json.decode(data);
 
     _result.forEach((String key, dynamic value) {
       _defaultLocaleStrings[key] = value;
     });
+  }
+
+  String _pathJsonStrings(Locale locale) {
+    if(locale?.countryCode?.isEmpty != false) {
+      return '${this._path}/${locale.languageCode}.json';
+    }
+
+    return '${this._path}/${locale.languageCode}_${locale.countryCode}.json';
   }
 
   bool _stringExists(String key) => _locationStrings?.containsKey(key) == true || _defaultLocaleStrings?.containsKey(key) == true;

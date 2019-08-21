@@ -9,7 +9,7 @@ void main() => runApp(InternationalizationExampleApp());
 class InternationalizationExampleApp extends StatelessWidget {
   InternationalizationExampleApp() {
     suportedLocales.addAll([
-      const Locale('pt', 'BR'),
+      const Locale('pt'),
       const Locale('en', 'US'),
     ]);
   }
@@ -20,7 +20,7 @@ class InternationalizationExampleApp extends StatelessWidget {
       supportedLocales: suportedLocales,
         localizationsDelegates: [
             InternationalizationDelegate(
-                defaultLocale: Locale('pt', 'BR'),
+                defaultLocale: Locale('pt'),
                 path: "./assets/strings",
             ),
             GlobalMaterialLocalizations.delegate,
@@ -30,3 +30,29 @@ class InternationalizationExampleApp extends StatelessWidget {
     );
   }
 }
+
+
+/*class Teste {
+  Teste() {
+    Query([
+      User(),
+    ]);
+  }
+}
+
+class Query{
+  final List<Querible> query;
+
+  Query(this.query) {
+    query.first.toString();
+  }
+}
+
+abstract class Querible {}
+
+class User implements Querible {
+  @override
+  String toString() {
+    return this.runtimeType.toString();
+  }
+}*/

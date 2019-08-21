@@ -10,13 +10,13 @@ Import internationalization package on main.dart.
 import 'package:internationalization/internationalization.dart';
 ```
 
-call `suportedLocales` in constructor of your main widget and add locales you might like to use.
+call `suportedLocales` in constructor of your main widget and add locales you might like to use. You may pass language and country code, or just language code.
 
 ``` dart
 class App extends StatelessWidget {
   App() {
     suportedLocales.addAll([
-      const Locale('pt', 'BR'),
+      const Locale('pt'),
       const Locale('en', 'US'),
     ]);
   }
@@ -33,7 +33,7 @@ Widget build(BuildContext context) {
         supportedLocales: suportedLocales,
         localizationsDelegates: [
             InternationalizationDelegate(
-                defaultLocale: Locale('pt', 'BR'),
+                defaultLocale: Locale('pt'),
                 path: "assets/strings",
             ),
             GlobalMaterialLocalizations.delegate,
@@ -63,7 +63,7 @@ Strings.of(context).valueOf("key", args: ["A", "B", "C"], namedArgs: {"named_arg
 
 ## JSON file
 
-Crete JSON files with locale language code and country code. Ex.: `pt_BR.json`, `en_US.json`, etc...
+Crete JSON files with locale language code and country code. Ex.: `pt.json`, `en_US.json`, etc...
 `Note: create JSON files inside folder you passed to InternationalizationDelegate`
 
 ``` json

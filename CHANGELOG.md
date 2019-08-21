@@ -1,3 +1,6 @@
+## [1.2.0] (Agust 16, 2019)
+- Removed need to pass country code
+
 ## [1.1.0+1] (Agust 16, 2019)
 - README example for named interpolation
 
