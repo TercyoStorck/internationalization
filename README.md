@@ -4,27 +4,41 @@ A project to easily implement internationalization on flutter projects
 
 ## Configure Internationalization
 
-Import internationalization package on main.dart.
+Create a yaml file named `internationalization` then do the configurations like this:
+
+``` yaml
+path: ./assets/strings
+default_locale:
+  language: en
+  country: US
+locales:
+  - locale:
+      language: pt
+  - locale:
+      language: en
+      country: US
+```
+
+- path -> where JSON files (strings) were placed
+- default_locale -> default strings
+- locales -> Array of locales
+
+Now import internationalization package on main.dart.
 
 ``` dart
 import 'package:internationalization/internationalization.dart';
 ```
 
-call `suportedLocales` in constructor of your main widget and add locales you might like to use. You may pass language and country code, or just language code.
+Make `void main()` async then load internationalization configurations
 
 ``` dart
-class App extends StatelessWidget {
-  App() {
-    suportedLocales.addAll([
-      const Locale('pt'),
-      const Locale('en', 'US'),
-    ]);
-  }
+void main() async {
+  await Internationalization.loadConfigurations();
+  runApp(InternationalizationExampleApp());
 }
 ```
 
-Now pass the `suportedLocales` to suportedLocales and the delegates to `localizationsDelegates`.
-For `InternationalizationDelegate` you pass a default locale and a path where the JSON files will be placed
+Pass the delegates to `localizationsDelegates`.
 
 ``` dart
 @override
@@ -32,10 +46,7 @@ Widget build(BuildContext context) {
     return MaterialApp(
         supportedLocales: suportedLocales,
         localizationsDelegates: [
-            InternationalizationDelegate(
-                defaultLocale: Locale('pt'),
-                path: "assets/strings",
-            ),
+            Internationalization.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
         ],
@@ -43,12 +54,13 @@ Widget build(BuildContext context) {
 }
 ```
 
-In `pubspec.yaml` put the path that you've passed to `InternationalizationDelegate`
+In `pubspec.yaml` put the path that you've passed to `InternationalizationDelegate` and the configuration file
 
 ``` yaml
 flutter:
   assets:
     - ./assets/strings/
+    - ./internationalization.yaml
 ```
 
 ## Usage

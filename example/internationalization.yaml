@@ -1,0 +1,9 @@
+path: ./assets/strings
+default_locale:
+  language: pt
+locales:
+  - locale:
+      language: pt
+  - locale:
+      language: en
+      country: US

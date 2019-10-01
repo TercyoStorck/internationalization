@@ -1,22 +1,48 @@
 library internationalization;
 
 import 'dart:convert';
-
+import 'package:yaml/yaml.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-List<Locale> suportedLocales = [];
+String _path;
+Locale _defaultLocale;
+List<Locale> _suportedLocales;
+
+Iterable<Locale> get suportedLocales => _suportedLocales;
+
+Future<Map> _getConfigurations() async {
+  String yamlFile = await rootBundle.loadString("./internationalization.yaml");
+  return  loadYaml(yamlFile);
+}
+
+_loadAssetsStringPath(Map yaml) {
+  _path = yaml["path"];
+}
+
+_loadSuportedLocales(Map yaml) {
+  _suportedLocales = yaml["locales"].map<Locale>(
+        (locale) {
+          final language = locale["locale"]["language"];
+          final country = locale["locale"]["country"];
+
+          return Locale(language, country);
+        }).toList();
+}
+
+_loadDefaultLocale(Map yaml) {
+  final language = yaml["default_locale"]["language"] ?? null;
+  final country = yaml["default_locale"]["country"] ?? null;
+
+  _defaultLocale = Locale(language, country);
+}
 
 class Strings {
   static final Map<String, dynamic> _defaultLocaleStrings = new Map();
-
   final Locale _locale;
-  final Locale _defaultLocale;
-  final String _path;
-
   Map<String, dynamic> _locationStrings;
 
-  Strings._(this._defaultLocale, this._locale, this._path);
+  Strings._(this._locale);
 
   static Strings of(BuildContext context) {
     return Localizations.of<Strings>(context, Strings);
@@ -38,7 +64,7 @@ class Strings {
       return;
     }
 
-    String data = await rootBundle.loadString(_pathJsonStrings(this._defaultLocale));
+    String data = await rootBundle.loadString(_pathJsonStrings(_defaultLocale));
     Map<String, dynamic> _result = json.decode(data);
 
     _result.forEach((String key, dynamic value) {
@@ -48,10 +74,10 @@ class Strings {
 
   String _pathJsonStrings(Locale locale) {
     if(locale?.countryCode?.isEmpty != false) {
-      return '${this._path}/${locale.languageCode}.json';
+      return '$_path/${locale.languageCode}.json';
     }
 
-    return '${this._path}/${locale.languageCode}_${locale.countryCode}.json';
+    return '$_path/${locale.languageCode}_${locale.countryCode}.json';
   }
 
   bool _stringExists(String key) => _locationStrings?.containsKey(key) == true || _defaultLocaleStrings?.containsKey(key) == true;
@@ -102,30 +128,34 @@ class Strings {
   }
 }
 
-class InternationalizationDelegate extends LocalizationsDelegate<Strings> {
-  final Locale defaultLocale;
-  final String path;
-
-  InternationalizationDelegate({
-    this.defaultLocale,
-    this.path,
-  }): assert(
-    defaultLocale != null && path != null
-  );
+class _InternationalizationDelegate extends LocalizationsDelegate<Strings> {
+  const _InternationalizationDelegate();
 
   @override
-  bool isSupported(Locale locale) => suportedLocales
+  bool isSupported(Locale locale) => _suportedLocales
       .map((locale) => locale.languageCode)
       .toList()
       .contains(locale.languageCode);
 
   @override
   Future<Strings> load(Locale locale) async {
-    Strings strings = Strings._(this.defaultLocale, locale, this.path);
+    Strings strings = Strings._(locale);
     await strings._load();
     return strings;
   }
 
   @override
-  bool shouldReload(InternationalizationDelegate old) => false;
+  bool shouldReload(_InternationalizationDelegate old) => false;
+}
+
+abstract class Internationalization {
+  static const LocalizationsDelegate<Strings> delegate = _InternationalizationDelegate();
+  
+  static loadConfigurations() async {
+    Map yaml = await _getConfigurations();
+
+    _loadAssetsStringPath(yaml);
+    _loadSuportedLocales(yaml);
+    _loadDefaultLocale(yaml);
+  }
 }

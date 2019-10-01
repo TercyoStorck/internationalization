@@ -1,3 +1,6 @@
+## [2.0.0] (October 1, 2019)
+- Configurations via yaml file
+
 ## [1.2.0] (Agust 16, 2019)
 - Removed need to pass country code
 

@@ -10,7 +10,4 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-flutter:
+  yaml: ^2.1.16
