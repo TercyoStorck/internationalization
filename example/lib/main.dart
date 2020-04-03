@@ -5,6 +5,7 @@ import 'package:internationalization/internationalization.dart';
 import 'usage.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Internationalization.loadConfigurations();
   runApp(InternationalizationExampleApp());
 }
