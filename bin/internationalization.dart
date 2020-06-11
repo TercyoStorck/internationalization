@@ -10,6 +10,8 @@ List<String> _filesName = [];
 List<String> _clazzes = [];
 List<String> _clazzInstances = [];
 
+//TODO: refactor the code!!
+
 void main(List<String> arguments) async {
   final yaml = _getConfigurations();
 

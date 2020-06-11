@@ -20,6 +20,7 @@ class InternationalizationExampleApp extends StatelessWidget {
         ),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       home: Usage(),
     );

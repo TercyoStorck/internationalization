@@ -9,7 +9,7 @@ Go to `pubspec.yaml` then do the configurations like this:
 ``` yaml
 internationalization:
   output-path: lib/infrastructure/resources/
-  path: assets/strings
+  path: assets/translations
   locales:
     - locale:
       language-code: pt
@@ -42,7 +42,7 @@ MaterialApp(
   ],
 );
 ```
-#### IMPORTANTE!! 
+#### IMPORTANT!! 
 Don't forget to expose the JSON files
 
 ``` yaml
@@ -52,7 +52,11 @@ flutter:
     - ./assets/strings/en/
     - ./assets/strings/pt/BR/
 ```
+## Folder structure
 
+The folder structure is very import. So you have to create as same as informed in pubspec.yaml
+
+![](images/folder_structure.jpg)
 
 ## Translation
 
@@ -86,3 +90,10 @@ You also use extensions on strings to translate. Just use a string with the key 
 ```dart
 "simple_string".translate()
 ```
+
+## BuildContext
+You moust have to, or not, inform the `BuildContext` to `Internationalization`. If you do, it allows Internationalization to listener when you change language of your app and avoid to close and reopen the app to apply the changes. 
+``` dart
+Internationalization.of(context);
+```
+To inform `BuildContext` just do it in every new screen (don't need to do in a simple widget)
