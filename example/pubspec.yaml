@@ -3,17 +3,42 @@ description: An example project for internationalization
 version: 1.0.0+1
 environment:
   sdk: ">=2.1.0 <3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
   internationalization:
     path: '../'
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 flutter:
   uses-material-design: true
   assets:
-    - ./assets/strings/
-    - ./internationalization.yaml
+    - ./assets/strings/en/
+    - ./assets/strings/pt/BR/
+
+internationalization:
+  output-path: lib/infra/res/
+  path: assets/strings
+  locales:
+    - locale: default
+      language-code: pt
+      countries-code:
+        - BR
+        - PT
+    - locale:
+      language-code: en
+    
+
+fonts:
+  - family: Raleway
+    fonts:
+      - asset: assets/fonts/raleway/Raleway-Regular.ttf
+      - asset: assets/fonts/raleway/Raleway-Italic.ttf
+        style: italic
+      - asset: assets/fonts/raleway/Raleway-Bold.ttf
+        weight: 700

@@ -1,3 +1,16 @@
+## [3.0.0] (June 11, 2020)
+- New Features
+    - Removed BuildContext need
+    - Multi-files for location
+    - Configuration via pubspac.yaml
+    - Extension functions to traslate
+    - Codegen for translations
+    - Number format
+    - Date format
+
+- Removed Features
+    - Default locate
+
 ## [2.0.0] (October 1, 2019)
 - Configurations via yaml file
 

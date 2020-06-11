@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:internationalization/internationalization.dart';
 
+import 'infra/res/internationalization.gen.dart';
 import 'usage.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Internationalization.loadConfigurations();
-  runApp(InternationalizationExampleApp());
-}
+void main() => runApp(InternationalizationExampleApp());
 
 class InternationalizationExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      supportedLocales: suportedLocales,
+      supportedLocales: Intl.suportedLocales,
       localizationsDelegates: [
-        Internationalization.delegate,
+        InternationalizationDelegate(
+          translationsPath: Intl.stringsPath,
+          suportedLocales: Intl.suportedLocales,
+          files: Intl.files,
+        ),
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],

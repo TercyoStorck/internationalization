@@ -1,13 +1,16 @@
 name: internationalization
 description: A project to easily implement internationalization on flutter projects
-version: 1.2.0
+version: 3.0.0
 author: Tércyo Storck <tercyostorck@gmail.com>
 homepage: https://github.com/TercyoStorck/internationalization
+
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
+
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   yaml: ^2.1.16
+  intl: ^0.16.1
