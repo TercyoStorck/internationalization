@@ -97,3 +97,9 @@ You moust have to, or not, inform the `BuildContext` to `Internationalization`. 
 Internationalization.of(context);
 ```
 To inform `BuildContext` just do it in every new screen (don't need to do in a simple widget)
+
+## NumberFormat & DateFormat
+These are features from [intl library](https://pub.dev/packages/intl) that was incoporated in `Internationalization`
+
+[NumberFormat](https://pub.dev/packages/intl#number-formatting-and-parsing)
+[DateFormat](https://pub.dev/packages/intl#date-formatting-and-parsing)
