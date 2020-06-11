@@ -1,0 +1,16 @@
+{
+    "simple_string": "String de valor simples",
+    "interpolation_string": "String interpolada {0}",
+    "interpolation_string_with_named_args": "String interpolada com argumentos nomeados ::named_arg_key::",
+    "simple_plurals": {
+        "zero": "Sem informações",
+        "one": "Um item",
+        "other": "Vários itens"
+    },
+    "interpolation_plurals": {
+        "zero": "Sem informações com interpoção {0}",
+        "one": "Um item encontrado",
+        "other": "{0} itens encontrados"
+    },
+    "next_page_btn": "Próxima página"
+}

@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:internationalization/internationalization.dart';
 
 class Intl {
-  static String get stringsPath => "assets/strings/";
+  static String get stringsPath => "assets/translations/";
   static List<Locale> get suportedLocales => [
     Locale('pt', 'BR'),
     Locale('pt', 'PT'),

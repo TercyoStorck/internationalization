@@ -18,12 +18,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - ./assets/strings/en/
-    - ./assets/strings/pt/BR/
+    - ./assets/translations/en/
+    - ./assets/translations/pt/BR/
 
 internationalization:
   output-path: lib/infra/res/
-  path: assets/strings
+  path: assets/translations
   locales:
     - locale: default
       language-code: pt
