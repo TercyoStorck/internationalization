@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-
+import 'package:path/path.dart' as path;
 import 'package:yaml/yaml.dart';
 import 'src/string_extension.dart';
 
@@ -14,7 +14,6 @@ List<String> _clazzInstances = [];
 
 void main(List<String> arguments) async {
   final yaml = _getConfigurations();
-
   _stringsPath = _path(yaml);
   _suportedLocales = _locales(yaml);
 
@@ -27,8 +26,8 @@ void main(List<String> arguments) async {
   for (FileSystemEntity fileEntity in files) {
     final file = fileEntity as File;
 
-    final fileName = file.path.split('/').last.split('.').first;
-    final clazzName = "_${file.path.split('/').last.split('.').first.capitalize()}";
+    final fileName = file.path.split(path.separator).last.split('.').first;
+    final clazzName = "_${file.path.split(path.separator).last.split('.').first.capitalize()}";
 
     final String fileContent = file.readAsStringSync();
 
