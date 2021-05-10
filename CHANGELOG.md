@@ -1,3 +1,6 @@
+## [3.1.0] (May 10, 2021)
+- Flutter 2
+
 ## [3.0.0] (June 11, 2020)
 - New Features
     - Removed BuildContext need
