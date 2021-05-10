@@ -13,3 +13,4 @@ dependencies:
     sdk: flutter
   yaml: ^3.1.0
   intl: ^0.17.0
+  path: ^1.8.0
