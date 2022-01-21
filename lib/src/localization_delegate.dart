@@ -1,31 +1,22 @@
-import 'package:flutter/widgets.dart';
-
-import 'translator.dart';
+part of 'translator.dart';
 
 class InternationalizationDelegate extends LocalizationsDelegate<Translator> {
   final String _translationsPath;
   final List<Locale> _suportedLocales;
-  final List<String> _files;
+  final Future<Map<String, dynamic>> Function(Locale locale)? addTranslations;
 
   InternationalizationDelegate({
-    @required String translationsPath,
-    @required List<Locale> suportedLocales,
-    @required List<String> files,
+    required List<Locale> suportedLocales,
+    String translationsPath = "assets/translations/",
+    this.addTranslations,
   })  : assert(
-          translationsPath != null && translationsPath.isNotEmpty,
-          "translationsPath can't be null or empty",
-        ),
-        assert(
-          suportedLocales != null && suportedLocales.isNotEmpty,
+          suportedLocales.isNotEmpty,
           "suportedLocales can't be null or empty",
         ),
-        assert(
-          files != null && files.isNotEmpty,
-          "files can't be null or empty",
-        ),
-        _translationsPath = translationsPath,
-        _suportedLocales = suportedLocales,
-        _files = files;
+        _translationsPath = translationsPath.endsWith('/')
+            ? translationsPath
+            : '$translationsPath/',
+        _suportedLocales = suportedLocales;
 
   @override
   bool isSupported(Locale locale) => _suportedLocales
@@ -35,14 +26,21 @@ class InternationalizationDelegate extends LocalizationsDelegate<Translator> {
 
   @override
   Future<Translator> load(Locale locale) async {
-    final translator = Translator.newInstance(
-      _translationsPath,
+    Map<String, dynamic> externalTranslations = {};
+
+    if (this.addTranslations != null) {
+      final translations = await this.addTranslations!(locale);
+      externalTranslations.addAll(translations);
+    }
+
+    final translator = Translator._(
       locale,
-      _files
+      _translationsPath,
+      externalTranslations,
     );
 
-    await translator.load();
-    
+    await translator._load();
+
     return translator;
   }
 

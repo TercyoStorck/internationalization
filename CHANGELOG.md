@@ -1,3 +1,8 @@
+## [4.0.0] (Jan 21, 2022)
+- Removing codegen
+- Added translation to BuildContext
+- Added translation context
+
 ## [3.1.0] (May 10, 2021)
 - Flutter 2
 

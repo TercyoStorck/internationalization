@@ -1,17 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:internationalization/internationalization.dart';
 
-import 'infra/res/internationalization.gen.dart';
-
 class NextPage extends StatelessWidget {
+  final _translationContext = 'nextPage';
+
   @override
   Widget build(BuildContext context) {
-    Internationalization.of(context);
-    
     return Scaffold(
-      appBar: AppBar(title: Text(Intl.next_page.title()),),
+      appBar: AppBar(
+        title: Text(
+          context.translate(
+            'title',
+            translationContext: _translationContext,
+          ),
+        ),
+      ),
       body: Center(
-        child: Text(Intl.next_page.wellcomeLabel()),
+        child: Column(
+          children: [
+            Text(
+              context.translate(
+                'wellcome_label',
+                translationContext: _translationContext,
+              ),
+            ),
+            Text(
+              context.translate('no_translate_context'),
+            ),
+          ],
+        ),
       ),
     );
   }

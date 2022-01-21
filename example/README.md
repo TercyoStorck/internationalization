@@ -1,6 +1,6 @@
-# internationalization_example
+# example
 
-A example project for internationalization
+A new Flutter project.
 
 ## Getting Started
 

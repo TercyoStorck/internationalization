@@ -30,27 +30,35 @@ Now go to main.dart and configure the `InternationalizationDelegate` and inform 
 
 ``` dart
 MaterialApp(
-  supportedLocales: Intl.suportedLocales,
+  supportedLocales: _supportedLocales,
   localizationsDelegates: [
     InternationalizationDelegate(
-      translationsPath: Intl.stringsPath,
-      suportedLocales: Intl.suportedLocales,
-      files: Intl.files,
+      translationsPath: _translationsPath,
+      suportedLocales: _supportedLocales,
+      addTranslations: (locale) async {
+        //Here you can get some external json and add to internationalization.
+        //!IMPORTANTE: The json must follow the same json structure on assets.
+        return {
+          'external_translate': 'Translation from external source',
+        };
+      },
+      
     ),
     GlobalMaterialLocalizations.delegate,
     GlobalWidgetsLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
   ],
 );
 ```
 #### IMPORTANT!! 
-Don't forget to expose the JSON files
+Don't forget to expose the JSON folders
 
 ``` yaml
 flutter:
   uses-material-design: true
   assets:
     - ./assets/strings/en/
-    - ./assets/strings/pt/BR/
+    - ./assets/strings/pt/
 ```
 ## Folder structure
 
@@ -61,42 +69,63 @@ The folder structure is very import. So you have to create as same as informed i
 ## Translation
 
 ``` dart
-Intl.usage.simpleString()
-Intl.usage.interpolationString(args: ["( ͡° ͜ʖ ͡°)"])
+"simple_string".translate(
+  context,
+  translationContext: _translationContext,
+),
+context.translate(
+  'interpolation_string',
+  translationContext: _translationContext,
+  args: ["( ͡° ͜ʖ ͡°)"],
+),
 
-Intl.usage.interpolationStringWithNamedArgs(
+context.translate(
+  'interpolation_string_with_named_args',
+  translationContext: _translationContext,
   namedArgs: {"named_arg_key": "( ͡° ͜ʖ ͡°)"},
 ),
 
-Intl.usage.simplePlurals(pluralValue: 0)),
-Intl.usage.simplePlurals(pluralValue: 1)),
-Intl.usage.simplePlurals(pluralValue: 123456789)),
+context.translate(
+  'simple_plurals',
+  translationContext: _translationContext,
+  pluralValue: 0,
+),
+context.translate(
+  'simple_plurals',
+  translationContext: _translationContext,
+  pluralValue: 1,
+),
+context.translate(
+  'simple_plurals',
+  translationContext: _translationContext,
+  pluralValue: 123456789,
+),
 
-Intl.usage.interpolationPlurals(
+context.translate(
+  'interpolation_plurals',
+  translationContext: _translationContext,
   pluralValue: 0,
   args: ["( ͡° ͜ʖ ͡°)"],
 ),
-Intl.usage.interpolationPlurals(
+context.translate(
+  'interpolation_plurals',
+  translationContext: _translationContext,
   pluralValue: 1,
   args: ["( ͡° ͜ʖ ͡°)"],
 ),
-Intl.usage.interpolationPlurals(
+context.translate(
+  'interpolation_plurals',
+  translationContext: _translationContext,
   pluralValue: 123456789,
   args: ["123456789"],
 ),
-```
-You also use extensions on strings to translate. Just use a string with the key and call `.translate()`
+
+context.translate('no_translate_context'),
 
 ```dart
 "simple_string".translate()
+context.translate()
 ```
-
-## BuildContext
-You moust have to, or not, inform the `BuildContext` to `Internationalization`. If you do, it allows Internationalization to listener when you change language of your app and avoid to close and reopen the app to apply the changes. 
-``` dart
-Internationalization.of(context);
-```
-To inform `BuildContext` just do it in every new screen (don't need to do in a simple widget)
 
 ## NumberFormat & DateFormat
 These are features from [intl library](https://pub.dev/packages/intl) that was incoporated in `Internationalization`

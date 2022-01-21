@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:internationalization/internationalization.dart';
 
-import 'infra/res/internationalization.gen.dart';
 import 'next_page.dart';
 
 class Usage extends StatelessWidget {
+  final _translationContext = 'usage';
+
   @override
   Widget build(BuildContext context) {
-    Internationalization.of(context);
-
     return Scaffold(
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -16,38 +15,83 @@ class Usage extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("simple_string".translate()),
-              Text(Intl.usage.interpolationString(args: ["( ͡° ͜ʖ ͡°)"])),
               Text(
-                Intl.usage.interpolationStringWithNamedArgs(
+                "simple_string".translate(
+                  context,
+                  translationContext: _translationContext,
+                ),
+              ),
+              Text(
+                context.translate(
+                  'interpolation_string',
+                  translationContext: _translationContext,
+                  args: ["( ͡° ͜ʖ ͡°)"],
+                ),
+              ),
+              Text(
+                context.translate(
+                  'interpolation_string_with_named_args',
+                  translationContext: _translationContext,
                   namedArgs: {"named_arg_key": "( ͡° ͜ʖ ͡°)"},
                 ),
               ),
-              Text(Intl.usage.simplePlurals(pluralValue: 0)),
-              Text(Intl.usage.simplePlurals(pluralValue: 1)),
-              Text(Intl.usage.simplePlurals(pluralValue: 123456789)),
               Text(
-                Intl.usage.interpolationPlurals(
+                context.translate(
+                  'simple_plurals',
+                  translationContext: _translationContext,
+                  pluralValue: 0,
+                ),
+              ),
+              Text(
+                context.translate(
+                  'simple_plurals',
+                  translationContext: _translationContext,
+                  pluralValue: 1,
+                ),
+              ),
+              Text(
+                context.translate(
+                  'simple_plurals',
+                  translationContext: _translationContext,
+                  pluralValue: 123456789,
+                ),
+              ),
+              Text(
+                context.translate(
+                  'interpolation_plurals',
+                  translationContext: _translationContext,
                   pluralValue: 0,
                   args: ["( ͡° ͜ʖ ͡°)"],
                 ),
               ),
               Text(
-                Intl.usage.interpolationPlurals(
+                context.translate(
+                  'interpolation_plurals',
+                  translationContext: _translationContext,
                   pluralValue: 1,
                   args: ["( ͡° ͜ʖ ͡°)"],
                 ),
               ),
               Text(
-                Intl.usage.interpolationPlurals(
+                context.translate(
+                  'interpolation_plurals',
+                  translationContext: _translationContext,
                   pluralValue: 123456789,
                   args: ["123456789"],
                 ),
               ),
-              RaisedButton(
-                child: Text(Intl.usage.nextPageBtn()),
+              Text(
+                context.translate('no_translate_context'),
+              ),
+              ElevatedButton(
+                child: Text(
+                  context.translate(
+                    'next_page_btn',
+                    translationContext: _translationContext,
+                  ),
+                ),
                 onPressed: () {
-                  return Navigator.of(context).push(
+                  Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (_) => NextPage(),
                     ),
