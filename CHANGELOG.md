@@ -1,3 +1,6 @@
+## [4.0.1] (May 26, 2023)
+- Updagrate flutter 3.10.2
+
 ## [4.0.0] (Jan 21, 2022)
 - Removing codegen
 - Added translation to BuildContext
