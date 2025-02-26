@@ -18,10 +18,6 @@ class Translator {
     _translations.addAll(externalTranslations);
   }
 
-  void addExternalTranslations(Map<String, dynamic> translations) {
-    _translations.addAll(translations);
-  }
-
   static Translator? of(BuildContext context) {
     return Localizations.of<Translator>(context, Translator);
   }
@@ -62,14 +58,23 @@ class Translator {
     return value;
   }
 
+  Map<String, dynamic> _foundKeyValue(List<String>? parent) {
+    Map<String, dynamic> translations = _translations;
+
+    for (var element in parent ?? []) {
+      translations = translations[element];
+    }
+
+    return translations;
+  }
+
   String _valueOf(
-    String? translationContext,
+    List<String>? parent,
     String key,
     List<String>? args,
     Map<String, dynamic>? namedArgs,
   ) {
-    final value = _translations[key] ??
-        _translations[translationContext]?[key]?.toString();
+    final value = _foundKeyValue(parent)[key];
 
     if (value != null) {
       return _interpolateValue(value, args, namedArgs);
@@ -79,14 +84,13 @@ class Translator {
   }
 
   String _pluralOf(
-    String? translationContext,
+    List<String>? parent,
     String key,
     int pluralValue,
     List<String>? args,
     Map<String, dynamic>? namedArgs,
   ) {
-    final Map<String, dynamic> plurals =
-        _translations[key] ?? _translations[translationContext][key];
+    final Map<String, dynamic> plurals = _foundKeyValue(parent)[key];
 
     final plural = {0: "zero", 1: "one"}[pluralValue] ?? "other";
     String value = plurals[plural].toString();
@@ -95,16 +99,20 @@ class Translator {
     return value;
   }
 
+  void addExternalTranslations(Map<String, dynamic> translations) {
+    _translations.addAll(translations);
+  }
+
   String translate(
     String key, {
-    String? translationContext,
+    List<String>? parent,
     int? pluralValue,
     List<String>? args,
     Map<String, dynamic>? namedArgs,
   }) {
     if (pluralValue != null) {
       return _pluralOf(
-        translationContext,
+        parent,
         key,
         pluralValue,
         args,
@@ -113,7 +121,7 @@ class Translator {
     }
 
     return _valueOf(
-      translationContext,
+      parent,
       key,
       args,
       namedArgs,

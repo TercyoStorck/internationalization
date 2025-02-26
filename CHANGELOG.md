@@ -1,3 +1,8 @@
+## [4.1.0] (Feb 26, 2025)
+- Added `TextIntl`
+- Removed `translationContext`
+- Added `parent` (fullpath to translation key)
+
 ## [4.0.1] (May 26, 2023)
 - Updagrate flutter 3.10.2
 

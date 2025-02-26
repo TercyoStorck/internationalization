@@ -5,13 +5,14 @@ import 'translator.dart';
 extension StringExtension on String {
   String translate(
     BuildContext context, {
-    String? translationContext,
+    List<String>? parent,
     int? pluralValue,
     List<String>? args,
     Map<String, dynamic>? namedArgs,
-  }) => Translator.of(context)?.translate(
+  }) =>
+      Translator.of(context)?.translate(
         this,
-        translationContext: translationContext,
+        parent: parent,
         pluralValue: pluralValue,
         args: args,
         namedArgs: namedArgs,
@@ -22,14 +23,14 @@ extension StringExtension on String {
 extension ContextTranslator on BuildContext {
   String translate(
     String key, {
-    String? translationContext,
+    List<String>? parent,
     int? pluralValue,
     List<String>? args,
     Map<String, dynamic>? namedArgs,
   }) =>
       Translator.of(this)?.translate(
         key,
-        translationContext: translationContext,
+        parent: parent,
         pluralValue: pluralValue,
         args: args,
         namedArgs: namedArgs,
