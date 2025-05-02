@@ -110,6 +110,11 @@ class Translator {
     List<String>? args,
     Map<String, dynamic>? namedArgs,
   }) {
+    final splitedKey = key.split('.');
+
+    key = splitedKey.removeLast();
+    parent ??= splitedKey;
+
     if (pluralValue != null) {
       return _pluralOf(
         parent,
