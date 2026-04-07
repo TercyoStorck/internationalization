@@ -1,3 +1,10 @@
+## [5.0.1] (Apr 7, 2026)
+- Added dot-notation shorthand for nested keys: `context.translate('nav.home')` resolves `{ "nav": { "home": "..." } }` automatically
+- `translate()` now has safe error handling — falls back to returning the key instead of throwing
+- Dot-notation only applies when no explicit `parent` list is provided
+- Completely rewritten README with full API reference, correct examples, parameter tables, and interpolation/plurals guides
+- Improved example project: showcases all features (simple keys, nested keys, interpolation, plurals, `TextIntl`, `NumberFormat`, `DateFormat`, runtime injection) with live language switching
+
 ## [4.1.0] (Feb 26, 2025)
 - Added `TextIntl`
 - Removed `translationContext`

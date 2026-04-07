@@ -1,6 +1,6 @@
-# example
+# internationalization_example
 
-A new Flutter project.
+Example app for the internationalization package
 
 ## Getting Started
 

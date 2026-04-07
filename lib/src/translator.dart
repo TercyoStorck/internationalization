@@ -110,26 +110,39 @@ class Translator {
     List<String>? args,
     Map<String, dynamic>? namedArgs,
   }) {
-    final splitedKey = key.split('.');
+    if (parent?.isNotEmpty != true) {
+      final regex = RegExp(r'\w+(?:\.\w+)+$');
+      final regexMatch = regex.firstMatch(key);
 
-    key = splitedKey.removeLast();
-    parent ??= splitedKey;
+      if (regexMatch != null) {
+        final serializedParameters = regexMatch.group(0) ?? '';
 
-    if (pluralValue != null) {
-      return _pluralOf(
+        final splitedKey = serializedParameters.split('.');
+
+        key = splitedKey.removeLast();
+        parent ??= splitedKey;
+      }
+    }
+
+    try {
+      if (pluralValue != null) {
+        return _pluralOf(
+          parent,
+          key,
+          pluralValue,
+          args,
+          namedArgs,
+        );
+      }
+
+      return _valueOf(
         parent,
         key,
-        pluralValue,
         args,
         namedArgs,
       );
+    } catch (_) {
+      return key;
     }
-
-    return _valueOf(
-      parent,
-      key,
-      args,
-      namedArgs,
-    );
   }
 }

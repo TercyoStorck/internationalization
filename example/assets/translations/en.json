@@ -1,10 +1,59 @@
 {
-    "lblPushedTimes": "You have pushed the button this many times:",
-    "a": {
-        "b": {
-            "c": {
-                "d": "Value finally!!"
-            }
-        }
+  "app": {
+    "title": "i18n Showcase",
+    "subtitle": "Internationalization Package Demo"
+  },
+  "nav": {
+    "basics": "Basics",
+    "interpolation": "Interpolation",
+    "plurals": "Plurals",
+    "formats": "Formats"
+  },
+  "section": {
+    "simple": "Simple Strings",
+    "nested": "Nested Keys",
+    "string_ext": "String Extension",
+    "context_ext": "Context Extension",
+    "text_intl": "TextIntl Widget",
+    "args": "Positional Args",
+    "named_args": "Named Args",
+    "count": "Item Count",
+    "download": "Download Progress"
+  },
+  "greeting": "Hello, World!",
+  "welcome": "Welcome to the i18n demo",
+  "description": "This app demonstrates all features of the internationalization package for Flutter.",
+  "basics": {
+    "simple": "I am a simple translated string",
+    "nested_key": "I live inside a nested JSON object"
+  },
+  "interpolation": {
+    "positional": "Hello, {0}! You have {1} new messages.",
+    "named": "Welcome back, ::firstName:: ::lastName::!",
+    "combined": "Dear ::name::, item #{0} is ready."
+  },
+  "plurals": {
+    "items": {
+      "zero": "No items in your cart",
+      "one": "You have {0} item in your cart",
+      "other": "You have {0} items in your cart"
+    },
+    "downloads": {
+      "zero": "No files downloaded",
+      "one": "::file:: downloaded successfully",
+      "other": "{0} files downloaded"
     }
+  },
+  "formats": {
+    "currency_label": "Currency",
+    "date_label": "Date",
+    "number_label": "Large Number"
+  },
+  "language": {
+    "current": "Current Language",
+    "english": "English",
+    "portuguese": "Portuguese",
+    "spanish": "Spanish",
+    "switch_prompt": "Tap a flag to switch language"
+  }
 }

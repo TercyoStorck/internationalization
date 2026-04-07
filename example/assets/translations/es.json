@@ -1,0 +1,59 @@
+{
+  "app": {
+    "title": "i18n Showcase",
+    "subtitle": "Demo del Paquete de Internacionalización"
+  },
+  "nav": {
+    "basics": "Básico",
+    "interpolation": "Interpolación",
+    "plurals": "Plurales",
+    "formats": "Formatos"
+  },
+  "section": {
+    "simple": "Cadenas Simples",
+    "nested": "Claves Anidadas",
+    "string_ext": "Extensión String",
+    "context_ext": "Extensión Context",
+    "text_intl": "Widget TextIntl",
+    "args": "Args Posicionales",
+    "named_args": "Args Nombrados",
+    "count": "Conteo de Artículos",
+    "download": "Progreso de Descarga"
+  },
+  "greeting": "¡Hola, Mundo!",
+  "welcome": "Bienvenido a la demo i18n",
+  "description": "Esta app demuestra todas las características del paquete de internacionalización para Flutter.",
+  "basics": {
+    "simple": "Soy una cadena traducida simple",
+    "nested_key": "Vivo dentro de un objeto JSON anidado"
+  },
+  "interpolation": {
+    "positional": "¡Hola, {0}! Tienes {1} mensajes nuevos.",
+    "named": "¡Bienvenido de nuevo, ::firstName:: ::lastName::!",
+    "combined": "Estimado ::name::, el artículo #{0} está listo."
+  },
+  "plurals": {
+    "items": {
+      "zero": "No hay artículos en tu carrito",
+      "one": "Tienes {0} artículo en tu carrito",
+      "other": "Tienes {0} artículos en tu carrito"
+    },
+    "downloads": {
+      "zero": "No se descargaron archivos",
+      "one": "::file:: descargado con éxito",
+      "other": "{0} archivos descargados"
+    }
+  },
+  "formats": {
+    "currency_label": "Moneda",
+    "date_label": "Fecha",
+    "number_label": "Número Grande"
+  },
+  "language": {
+    "current": "Idioma Actual",
+    "english": "Inglés",
+    "portuguese": "Portugués",
+    "spanish": "Español",
+    "switch_prompt": "Toca una bandera para cambiar el idioma"
+  }
+}
