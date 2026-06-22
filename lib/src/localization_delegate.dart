@@ -13,16 +13,11 @@ class InternationalizationDelegate extends LocalizationsDelegate<Translator> {
           suportedLocales.isNotEmpty,
           "suportedLocales can't be null or empty",
         ),
-        _translationsPath = translationsPath.endsWith('/')
-            ? translationsPath
-            : '$translationsPath/',
+        _translationsPath = translationsPath.endsWith('/') ? translationsPath : '$translationsPath/',
         _suportedLocales = suportedLocales;
 
   @override
-  bool isSupported(Locale locale) => _suportedLocales
-      .map((locale) => locale.languageCode)
-      .toList()
-      .contains(locale.languageCode);
+  bool isSupported(Locale locale) => _suportedLocales.map((locale) => locale.languageCode).toList().contains(locale.languageCode);
 
   @override
   Future<Translator> load(Locale locale) async {

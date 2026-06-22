@@ -1,3 +1,7 @@
+## [5.1.0] (Jun 22, 2026)
+- Added `Translator.onValueNotFoundListener` — register a callback to be notified whenever a translation key cannot be resolved (useful for logging missing translations to analytics/Sentry)
+- Introduced `ValueNotFoundException` thrown internally when a key has no value; `translate()` still safely falls back to returning the key, so behavior is backwards-compatible
+
 ## [5.0.1] (Apr 7, 2026)
 - Added dot-notation shorthand for nested keys: `context.translate('nav.home')` resolves `{ "nav": { "home": "..." } }` automatically
 - `translate()` now has safe error handling — falls back to returning the key instead of throwing

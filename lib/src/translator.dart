@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:internationalization/src/exceptions.dart';
 
 part 'localization_delegate.dart';
 
@@ -9,6 +10,9 @@ class Translator {
   final String _translationsPath;
   final Locale _locale;
   final Map<String, dynamic> _translations = {};
+
+  static Function(String key)? _onValueNotFound;
+  static void onValueNotFoundListener(void Function(String key)? callback) => _onValueNotFound = callback;
 
   Translator._(
     this._locale,
@@ -76,11 +80,11 @@ class Translator {
   ) {
     final value = _foundKeyValue(parent)[key];
 
-    if (value != null) {
-      return _interpolateValue(value, args, namedArgs);
+    if (value == null) {
+      throw ValueNotFoundException(key);
     }
 
-    return key;
+    return _interpolateValue(value, args, namedArgs);
   }
 
   String _pluralOf(
@@ -141,6 +145,9 @@ class Translator {
         args,
         namedArgs,
       );
+    } on ValueNotFoundException catch (e) {
+      Translator._onValueNotFound?.call(e.key);
+      return key;
     } catch (_) {
       return key;
     }
